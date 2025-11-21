@@ -2,7 +2,7 @@ import { createClient } from '@supabase/supabase-js'
 
 // Estas variables las obtienes de tu dashboard de Supabase
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://wclcwmcwgfscisckvgiv.supabase.co'
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndjbGN3bWN3Z2ZzY2lzY2t2Z2l2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxNjk0NTQsImV4cCI6MjA3Nzc0NTQ1NH0.cB-q8aO7Cfft9MxbbsBC17UwAhpXw0MORKwwzOwzaBk'
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_XseCIwU7TcWORpUZF_WkUg_NKakVW1D'
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
@@ -109,7 +109,7 @@ export const authAPI = {
         try {
             console.log('🔐 Intentando autenticación para:', email);
             console.log('🔗 URL de Supabase:', supabaseUrl);
-            
+
             // Primero, probar la conexión básica
             const { data: testConnection, error: connectionError } = await supabase
                 .from('admin_users')
@@ -117,9 +117,9 @@ export const authAPI = {
 
             if (connectionError) {
                 console.error('❌ Error de conexión:', connectionError);
-                return { 
-                    success: false, 
-                    error: 'Error de conexión con la base de datos: ' + connectionError.message 
+                return {
+                    success: false,
+                    error: 'Error de conexión con la base de datos: ' + connectionError.message
                 };
             }
 
@@ -135,17 +135,17 @@ export const authAPI = {
 
             if (error) {
                 console.error('❌ Error en consulta de usuario:', error);
-                return { 
-                    success: false, 
-                    error: 'Error consultando usuario: ' + error.message 
+                return {
+                    success: false,
+                    error: 'Error consultando usuario: ' + error.message
                 };
             }
 
             if (!users || users.length === 0) {
                 console.log('❌ Usuario no encontrado:', email);
-                return { 
-                    success: false, 
-                    error: 'Credenciales incorrectas' 
+                return {
+                    success: false,
+                    error: 'Credenciales incorrectas'
                 };
             }
 
@@ -155,18 +155,18 @@ export const authAPI = {
             // Verificar si el usuario está activo (si la columna existe)
             if (user.active !== undefined && user.active === false) {
                 console.log('❌ Usuario inactivo:', email);
-                return { 
-                    success: false, 
-                    error: 'Usuario inactivo' 
+                return {
+                    success: false,
+                    error: 'Usuario inactivo'
                 };
             }
 
             // Verificar la contraseña (comparación directa por ahora)
             if (user.password_hash !== password) {
                 console.log('❌ Contraseña incorrecta para:', email);
-                return { 
-                    success: false, 
-                    error: 'Credenciales incorrectas' 
+                return {
+                    success: false,
+                    error: 'Credenciales incorrectas'
                 };
             }
 
@@ -176,7 +176,7 @@ export const authAPI = {
             try {
                 await supabase
                     .from('admin_users')
-                    .update({ 
+                    .update({
                         last_login: new Date().toISOString()
                     })
                     .eq('id', user.id);
@@ -185,8 +185,8 @@ export const authAPI = {
                 // No fallar por esto
             }
 
-            return { 
-                success: true, 
+            return {
+                success: true,
                 user: {
                     id: user.id,
                     email: user.email,
@@ -197,9 +197,9 @@ export const authAPI = {
 
         } catch (error) {
             console.error('❌ Error general en autenticación:', error);
-            return { 
-                success: false, 
-                error: 'Error de conexión. Verifica tu internet e inténtalo de nuevo.' 
+            return {
+                success: false,
+                error: 'Error de conexión. Verifica tu internet e inténtalo de nuevo.'
             };
         }
     },
@@ -242,13 +242,13 @@ export const authAPI = {
             }
 
             const user = users[0];
-            
+
             if (user.password_hash !== password) {
                 return { success: false, error: 'Credenciales incorrectas' };
             }
 
-            return { 
-                success: true, 
+            return {
+                success: true,
                 user: {
                     id: user.id,
                     email: user.email,
