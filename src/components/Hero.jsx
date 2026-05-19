@@ -10,8 +10,8 @@ const Hero = () => {
     {
       id: 1,
       image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2065&q=80',
-      title: 'Cuídate',
-      subtitle: 'con Lácteos la Florida',
+      title: 'Bienvenidos',
+      subtitle: 'a Lácteos la Florida',
       description: 'Productos lácteos naturales que nutren tu cuerpo y alma',
       color: 'from-slate-600 to-blue-400',
       textColor: 'text-slate-100'
